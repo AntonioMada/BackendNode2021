@@ -33,7 +33,45 @@ function getAssignments(req, res) {
     }
   );
 }
+function getAssignmentsRendu(req, res) {
+  var aggregateQuery = Assignment.aggregate(([
+    {$match:{rendu:true}}
+  ]));
+  
+  Assignment.aggregatePaginate(
+    aggregateQuery,
+    {
+      page: parseInt(req.query.page) || 1,
+      limit: parseInt(req.query.limit) || 10,
+    },
+    (err, assignments) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send(assignments);
+    }
+  );
+}
 
+function getAssignmentsNonRendu(req, res) {
+  var aggregateQuery = Assignment.aggregate(([
+    {$match:{rendu:false}}
+  ]));
+  
+  Assignment.aggregatePaginate(
+    aggregateQuery,
+    {
+      page: parseInt(req.query.page) || 1,
+      limit: parseInt(req.query.limit) || 10,
+    },
+    (err, assignments) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send(assignments);
+    }
+  );
+}
 // Récupérer un assignment par son id (GET)
 function getAssignment(req, res) {
   let assignmentId = req.params.id;
@@ -103,4 +141,6 @@ module.exports = {
   getAssignment,
   updateAssignment,
   deleteAssignment,
+  getAssignmentsRendu,
+  getAssignmentsNonRendu,
 };
