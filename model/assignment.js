@@ -9,9 +9,9 @@ let AssignmentSchema = Schema({
     nom: String,
     rendu: Boolean,
     auteur: String,
-    id_matiere:Number,
     note:Number,
-    remarques:String
+    remarques:String,
+    id_matiere:Number,
 });
 
 AssignmentSchema.plugin(aggregatePaginate);
