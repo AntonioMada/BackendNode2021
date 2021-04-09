@@ -9,7 +9,7 @@ let AssignmentSchema = Schema({
     nom: String,
     rendu: Boolean,
     auteur: String,
-    id_matiere:Number,
+    matiere: [{ type: Schema.Types.ObjectId, ref: 'matiere' }],
     note:Number,
     remarques:String
 });
