@@ -13,3 +13,4 @@ class MatiereView {
       this.note = note;
     }
   }
+  module.exports = MatiereView

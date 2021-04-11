@@ -1,6 +1,8 @@
 // Assignment est le "modèle mongoose", il est connecté à la base de données
 let Assignment = require("../model/assignment");
 
+let MatiereView = require("../model/matiereview");
+let Matiere = require("../model/matiere");
 /* Version sans pagination */
 // Récupérer tous les assignments (GET)
 /*
@@ -14,6 +16,24 @@ function getAssignments(req, res){
     });
 }
 */
+async function getAssignmentsMatiere(req, res) {
+  try{
+    let tab = [];
+    const assignments = await Assignment.find();
+    for(let i=0; i < assignments.length; i++){
+        const element = assignments[i];
+        const matiere = await Matiere.findOne({ id: element.id_matiere});
+        tab.push(new MatiereView(element.id,element.dateDeRendu,element.nom,element.rendu,element.auteur,element.id_matiere,matiere.nom,matiere.nom_prof,matiere.Image,element.note,element.remarques));
+    }
+    console.log(tab.length);
+    res.json(tab);
+  }
+  catch (e) {
+    console.log(e);
+    res.status(500);
+    res.json(e);
+  }
+}
 
 // Récupérer tous les assignments (GET), AVEC PAGINATION
 function getAssignments(req, res) {
@@ -35,7 +55,8 @@ function getAssignments(req, res) {
 }
 function getAssignmentsRendu(req, res) {
   var aggregateQuery = Assignment.aggregate(([
-    {$match:{rendu:true}}
+    {$match:{rendu:true}},
+    { $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} }
   ]));
   
   Assignment.aggregatePaginate(
@@ -55,7 +76,8 @@ function getAssignmentsRendu(req, res) {
 
 function getAssignmentsNonRendu(req, res) {
   var aggregateQuery = Assignment.aggregate(([
-    {$match:{rendu:false}}
+    {$match:{rendu:false}},
+    { $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} }
   ]));
   
   Assignment.aggregatePaginate(
@@ -88,10 +110,13 @@ function getAssignment(req, res) {
 function postAssignment(req, res) {
   let assignment = new Assignment();
   assignment.id = req.body.id;
+  assignment.id_matiere = req.body.id_matiere;
   assignment.nom = req.body.nom;
   assignment.auteur = req.body.auteur;
   assignment.dateDeRendu = req.body.dateDeRendu;
   assignment.rendu = req.body.rendu;
+  assignment.note = req.body.note;
+  assignment.remarques = req.body.remarques;
 
   console.log("POST assignment reçu :");
   console.log(assignment);
@@ -142,5 +167,5 @@ module.exports = {
   updateAssignment,
   deleteAssignment,
   getAssignmentsRendu,
-  getAssignmentsNonRendu,
+  getAssignmentsNonRendu,getAssignmentsMatiere
 };

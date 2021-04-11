@@ -6,6 +6,7 @@ let assignment = require('./routes/assignments');
 let matiere = require('./routes/matieres');
 let user = require('./routes/users');
 
+
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
@@ -80,6 +81,8 @@ app.route(prefix + '/users/check')
 .post(user.Checklogin);
 
 
+app.route(prefix + '/assigns/matiere')
+.get(assignment.getAssignmentsMatiere);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
