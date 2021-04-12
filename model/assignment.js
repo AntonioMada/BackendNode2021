@@ -1,3 +1,4 @@
+const { ObjectId } = require('bson');
 let mongoose = require('mongoose');
 var aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
@@ -12,7 +13,7 @@ let AssignmentSchema = Schema({
     matiere: [{ type: Schema.Types.ObjectId, ref: 'matiere' }],
     note:Number,
     remarques:String,
-    id_matiere:Number,
+    id_matiere:Number,  
 });
 
 AssignmentSchema.plugin(aggregatePaginate);
