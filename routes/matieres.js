@@ -1,5 +1,7 @@
 // Assignment est le "modèle mongoose", il est connecté à la base de données
 let Matiere = require("../model/matiere");
+let Assignment = require("../model/assignment");
+let MatiereView = require("../model/matiereview");
 
 
 // Récupérer tous les matieres (GET), AVEC PAGINATION
@@ -26,8 +28,8 @@ function getMatiere(req, res) {
     res.json(matiere);
   });
 }
-
 module.exports = {
   getMatieres,
-  getMatiere,
+  getMatiere
+  
 };

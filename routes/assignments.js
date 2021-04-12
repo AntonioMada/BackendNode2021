@@ -1,5 +1,6 @@
 // Assignment est le "modèle mongoose", il est connecté à la base de données
 let Assignment = require("../model/assignment");
+let bddservice = require("../services/bdd")
 
 /* Version sans pagination */
 // Récupérer tous les assignments (GET)
@@ -135,6 +136,12 @@ function deleteAssignment(req, res) {
   });
 }
 
+//maj bdd
+function populatedb(req, res) {
+  console.log("populating db...");
+  res.json({ message: "Database populated" });
+}
+
 module.exports = {
   getAssignments,
   postAssignment,
@@ -143,4 +150,5 @@ module.exports = {
   deleteAssignment,
   getAssignmentsRendu,
   getAssignmentsNonRendu,
+  populatedb
 };

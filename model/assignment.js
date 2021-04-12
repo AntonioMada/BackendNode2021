@@ -11,7 +11,8 @@ let AssignmentSchema = Schema({
     auteur: String,
     matiere: [{ type: Schema.Types.ObjectId, ref: 'matiere' }],
     note:Number,
-    remarques:String
+    remarques:String,
+    id_matiere:Number,
 });
 
 AssignmentSchema.plugin(aggregatePaginate);

@@ -75,6 +75,15 @@ app.route(prefix + '/rendu')
 app.route(prefix + '/nonrendu')
 .get(assignment.getAssignmentsNonRendu);
 
+
+app.route(prefix + '/users/check')
+.post(user.Checklogin);
+
+app.route(prefix + '/populatedb')
+.get(assignment.populatedb)
+
+
+
 // On démarre le serveur
 app.listen(port, "0.0.0.0");
 console.log('Serveur démarré sur http://localhost:' + port);
