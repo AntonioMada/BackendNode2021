@@ -80,8 +80,8 @@ app.route(prefix + '/nonrendu')
 app.route(prefix + '/users/check')
 .post(user.Checklogin);
 
-app.route(prefix + '/populatedb')
-.get(assignment.populatedb)
+// app.route(prefix + '/populatedb')
+// .get(assignment.populatedb)
 
 
 app.route(prefix + '/assigns/matiere')

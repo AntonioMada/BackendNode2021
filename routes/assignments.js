@@ -96,15 +96,45 @@ function getAssignmentsNonRendu(req, res) {
   );
 }
 // Récupérer un assignment par son id (GET)
+// function getAssignment(req, res) {
+//   let assignmentId = req.params.id;
+
+//   Assignment.findOne({ id: assignmentId }, (err, assignment) => {
+//     if (err) {
+//       res.send(err);
+//     }
+//     res.json(assignment);
+//   });
+// }
+
 function getAssignment(req, res) {
   let assignmentId = req.params.id;
-
-  Assignment.findOne({ id: assignmentId }, (err, assignment) => {
-    if (err) {
-      res.send(err);
+  console.log("Id de l'assignment :"+assignmentId);
+  
+  Assignment.aggregate(
+    ([
+      { 
+        $lookup: 
+        {
+          from: "matieres", 
+          localField: "id_matiere", 
+          foreignField: "id", 
+          as: "matiere"
+        } 
+      },
+      { $match:
+        {
+          "id" : assignmentId
+        } 
+      },
+    ]),
+    (err, assignment) => {
+      if (err) {
+        res.send(err);
+      }
+      res.send(assignment);
     }
-    res.json(assignment);
-  });
+  );
 }
 
 // Ajout d'un assignment (POST)
