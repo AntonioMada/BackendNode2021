@@ -1,9 +1,9 @@
 // Assignment est le "modèle mongoose", il est connecté à la base de données
 let Assignment = require("../model/assignment");
-let bddservice = require("../services/bdd")
 
 let MatiereView = require("../model/matiereview");
 let Matiere = require("../model/matiere");
+const { Int32 } = require("bson");
 /* Version sans pagination */
 // Récupérer tous les assignments (GET)
 /*
@@ -108,30 +108,23 @@ function getAssignmentsNonRendu(req, res) {
 // }
 
 function getAssignment(req, res) {
-  let assignmentId = req.params.id;
+  var assignmentId = Number(req.params.id);
   console.log("Id de l'assignment :"+assignmentId);
   
   Assignment.aggregate(
-    ([
-      { 
-        $lookup: 
-        {
-          from: "matieres", 
-          localField: "id_matiere", 
-          foreignField: "id", 
-          as: "matiere"
-        } 
-      },
+    [
       { $match:
         {
-          "id" : assignmentId
+          id : assignmentId
         } 
-      },
-    ]),
+      },{ $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} },
+      {$limit :1}
+    ],
     (err, assignment) => {
       if (err) {
         res.send(err);
       }
+      console.log("Id de l's :"+assignment.id);
       res.send(assignment);
     }
   );
