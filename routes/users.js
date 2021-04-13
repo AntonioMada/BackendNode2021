@@ -26,7 +26,7 @@ function login(req, res) {
             res.send(err);
       }
       if (user == null) {
-          res.status(500).send("There was a problem registering the user.")
+          res.status(203).send("There was a problem registering the user.")
       }else{
         console.log(user);
         
@@ -41,17 +41,17 @@ function Checklogin(req, res) {
     console.log('token');
     let token = req.body.token;
     console.log(token);
-    if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+    if (!token) return res.status(203).send({ auth: false, message: 'No token provided.' });
 
     jwt.verify(token, secret, function(err, decoded) {
-        if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.'});
+        if (err) return res.status(203).send({ auth: false, message: 'Failed to authenticate token.'});
 
         User.findOne({ id:decoded.user.id }, (err, user) => {
             
-            if (err) return res.status(500).send("There was a problem finding the user.");
+            if (err) return res.status(203).send("There was a problem finding the user.");
 
             if (user == null) {
-             console.log("user incorrect");
+                res.status(203).send(user);
             }
               res.status(200).send(user);
           });
