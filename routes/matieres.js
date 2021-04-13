@@ -31,5 +31,5 @@ function getMatiere(req, res) {
 }
 module.exports = {
   getMatieres,
-  getMatiere
+  getMatiere,
 };
