@@ -9,6 +9,7 @@ function getMatieres(req, res) {
   
     Matiere.find(
     (err, matieres) => {
+      console.log("Tafiditra ato");
       if (err) {
         res.send(err);
       }
@@ -31,5 +32,4 @@ function getMatiere(req, res) {
 module.exports = {
   getMatieres,
   getMatiere
-  
 };

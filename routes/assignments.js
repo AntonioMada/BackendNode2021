@@ -125,7 +125,7 @@ function getAssignment(req, res) {
         res.send(err);
       }
       console.log("Id de l's :"+assignment.id);
-      res.send(assignment);
+      res.send(assignment[0]);
     }
   );
 }
