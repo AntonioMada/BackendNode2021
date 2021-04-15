@@ -21,7 +21,7 @@ ou
 - $ npm start
 
 # Fonctionnalités
-Le backend fournit tous les services utilisés dans le frontend
+Le backend fournit tous les services utilisés dans le frontend notamment la relation avec la base de données utilisateur pour le login avec Jwt fournis puis décoder.
 
 # Utilisateurs :
 ### Admin:
@@ -33,3 +33,5 @@ Edy/peMCg4yZ
 
 # Liens utilisés :
 - https://mongoosejs.com/docs/
+- https://www.freecodecamp.org/news/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52/ (pour le JWT)
+- https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/
