@@ -57,11 +57,18 @@ function getAssignments(req, res) {
   );
 }
 function getAssignmentsRendu(req, res) {
-  var aggregateQuery = Assignment.aggregate(([
-    {$match:{rendu:true}},
+  var search = req.query.search;
+  var aggregateQuery
+  if(req.query.search==null){
+     aggregateQuery = Assignment.aggregate(([
+      {$match:{rendu:true}},
+      { $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} }
+    ]));}else{
+   aggregateQuery = Assignment.aggregate(([
+    {$match:{rendu:true,nom:{ $regex:search }}},
     { $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} }
   ]));
-  
+  }
   Assignment.aggregatePaginate(
     aggregateQuery,
     {
@@ -78,11 +85,18 @@ function getAssignmentsRendu(req, res) {
 }
 
 function getAssignmentsNonRendu(req, res) {
-  var aggregateQuery = Assignment.aggregate(([
-    {$match:{rendu:false}},
+  var search = req.query.search;
+  var aggregateQuery;
+  if(req.query.search==null){
+     aggregateQuery = Assignment.aggregate(([
+      {$match:{rendu:false}},
+      { $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} }
+    ]));}else{
+   aggregateQuery = Assignment.aggregate(([
+    {$match:{rendu:false,nom: { $regex:search }}},
     { $lookup: {from: "matieres", localField: "id_matiere", foreignField: "id", as: "matiere"} }
   ]));
-  
+  }
   Assignment.aggregatePaginate(
     aggregateQuery,
     {
