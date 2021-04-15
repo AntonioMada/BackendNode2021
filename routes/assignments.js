@@ -199,11 +199,6 @@ function deleteAssignment(req, res) {
   });
 }
 
-//maj bdd
-function populatedb(req, res) {
-  console.log("populating db...");
-  res.json({ message: "Database populated" });
-}
 
 module.exports = {
   getAssignments,
